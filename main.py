@@ -128,5 +128,8 @@ def removeDirFiles(fileType,folderPATH,chapter):
 def FuncaoTeste():
     print("Isto e um teste")
 
+def FuncaoTeste2():
+    print("isto e o segundo teste")
+
 if __name__ == '__main__':
     main()
