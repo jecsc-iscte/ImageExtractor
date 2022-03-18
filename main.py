@@ -125,6 +125,8 @@ def removeDirFiles(fileType,folderPATH,chapter):
     if os.path.isfile(os.path.join(folderPATH, 'capitulo' + chapter + '.docx')):
         os.remove(os.path.join(folderPATH, 'capitulo' + chapter + '.docx'))
 
+def FuncaoTeste():
+    print("Isto e um teste")
 
 if __name__ == '__main__':
     main()
