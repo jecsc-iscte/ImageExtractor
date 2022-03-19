@@ -41,17 +41,17 @@ def imageExtractor(folderPATH, chapter, button, label):
         editLabelText(label, "Esse capitulo nao existe")
     else:
         os.chdir(folderPATH)
-        # editLabelText(label, "Clean das imagens desnecessarias")
-        # removeDirFiles('jpg', folderPATH, chapter)
-        # editLabelText(label, "Download das imagens necessarias")
-        # downloadImages('http://berserkmanga.net/manga/berserk-chapter-'+chapter+'/')
-        # editLabelText(label, "A criar word")
+        editLabelText(label, "Clean das imagens desnecessarias")
+        removeDirFiles('jpg', folderPATH, chapter)
+        editLabelText(label, "Download das imagens necessarias")
+        downloadImages('http://berserkmanga.net/manga/berserk-chapter-'+chapter+'/')
+        editLabelText(label, "A criar word")
         addImagesToWord(folderPATH, chapter)
         editLabelText(label, "A converter word para pdf")
-        # wordToPDF(folderPATH, chapter)
-        # editLabelText(label, "Feito!")
-        # removeDirFiles('jpg', folderPATH, chapter)
-        # editLabelText(label, "")
+        wordToPDF(folderPATH, chapter)
+        editLabelText(label, "Feito!")
+        removeDirFiles('jpg', folderPATH, chapter)
+        editLabelText(label, "")
     changeButtonState(button, "normal")
 
 def changeButtonState(button, state):
@@ -88,9 +88,9 @@ def addImagesToWord(folderPATH, chapter):
         img = Image.open(os.path.join(folderPATH, path))
         if img.size[0] > 1500:
             img = img.transpose(Image.ROTATE_270)
-            img = img.resize((int(img.size[0] * 0.3), int(img.size[1] * 0.3)), Image.ANTIALIAS)
+            img = img.resize((int(img.size[0] * 0.35), int(img.size[1] * 0.35)), Image.ANTIALIAS)
         else:
-            img = img.resize((int(img.size[0] * 0.45), int(img.size[1] * 0.45)), Image.ANTIALIAS)
+            img = img.resize((int(img.size[0] * 0.5), int(img.size[1] * 0.5)), Image.ANTIALIAS)
         img.save(os.path.join(folderPATH, path))
         p = document.add_paragraph()
         r = p.add_run()
@@ -101,9 +101,7 @@ def updateMargins(document, folderPATH, chapter):
     sections = document.sections
     for section in sections:
         section.top_margin = Cm(0)
-        section.bottom_margin = Cm(0)
-        section.left_margin = Cm(0)
-        section.right_margin = Cm(0)
+        section.left_margin = Cm(0.8)
 
     document.save(os.path.join(folderPATH, 'capitulo' + chapter + '.docx'))
 
@@ -119,7 +117,7 @@ def wordToPDF(folderPATH, chapter):
     doc.Close()
     word.Quit()
 
-def removeDirFiles(fileType,folderPATH,chapter):
+def removeDirFiles(fileType, folderPATH, chapter):
     for path in glob.glob1(folderPATH, 'tempBerserk*.'+fileType):
         os.remove(os.path.join(folderPATH, path))
     if os.path.isfile(os.path.join(folderPATH, 'capitulo' + chapter + '.docx')):
